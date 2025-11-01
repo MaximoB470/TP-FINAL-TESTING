@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prince - Vinyl Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body class="text-white">
+  <!-- Header -->
+  <header class="bg-purple-900/50 backdrop-blur-sm border-b border-purple-700">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-purple-200">🎵 Vinyl Store</h1>
+        <nav class="space-x-4">
+          <a href="index.html" class="text-purple-200 hover:text-white transition">← Volver</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Artist Header -->
+  <section class="container mx-auto px-4 py-12">
+    <div class="text-center mb-12">
+      <div class="text-8xl mb-4">💜</div>
+      <h2 class="text-5xl font-bold mb-4 text-purple-100">Prince</h2>
+      <p class="text-2xl text-purple-300">Funk / Rock / Pop</p>
+    </div>
+
+    <!-- Albums List -->
+    <div class="max-w-4xl mx-auto space-y-6">
+      
+      <!-- Album 1 -->
+      <div class="bg-purple-800/30 backdrop-blur-sm rounded-xl border border-purple-700 p-6 hover:border-purple-500 transition">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div class="flex-1">
+            <h3 class="text-2xl font-bold text-purple-100 mb-2">Purple Rain</h3>
+            <p class="text-purple-300 mb-2">Género: Rock / Pop / Funk</p>
+            <div class="text-purple-200">
+              <p class="font-semibold mb-1">Canciones destacadas:</p>
+              <ul class="list-disc list-inside text-purple-300 space-y-1">
+                <li>Purple Rain</li>
+                <li>When Doves Cry</li>
+                <li>Let's Go Crazy</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-col items-end gap-3">
+            <p class="text-3xl font-bold text-purple-200">$55.00</p>
+            <button onclick="buyAlbum('Prince', 'Purple Rain', 55.00)" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg transition font-semibold">
+              Comprar Vinilo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Album 2 -->
+      <div class="bg-purple-800/30 backdrop-blur-sm rounded-xl border border-purple-700 p-6 hover:border-purple-500 transition">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div class="flex-1">
+            <h3 class="text-2xl font-bold text-purple-100 mb-2">1999</h3>
+            <p class="text-purple-300 mb-2">Género: Funk / Pop / Rock</p>
+            <div class="text-purple-200">
+              <p class="font-semibold mb-1">Canciones destacadas:</p>
+              <ul class="list-disc list-inside text-purple-300 space-y-1">
+                <li>1999</li>
+                <li>Little Red Corvette</li>
+                <li>Delirious</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-col items-end gap-3">
+            <p class="text-3xl font-bold text-purple-200">$50.00</p>
+            <button onclick="buyAlbum('Prince', '1999', 50.00)" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg transition font-semibold">
+              Comprar Vinilo
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Album 3 -->
+      <div class="bg-purple-800/30 backdrop-blur-sm rounded-xl border border-purple-700 p-6 hover:border-purple-500 transition">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div class="flex-1">
+            <h3 class="text-2xl font-bold text-purple-100 mb-2">Sign O' the Times</h3>
+            <p class="text-purple-300 mb-2">Género: Funk / Rock / Soul</p>
+            <div class="text-purple-200">
+              <p class="font-semibold mb-1">Canciones destacadas:</p>
+              <ul class="list-disc list-inside text-purple-300 space-y-1">
+                <li>Sign O' the Times</li>
+                <li>U Got the Look</li>
+                <li>I Could Never Take the Place of Your Man</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-col items-end gap-3">
+            <p class="text-3xl font-bold text-purple-200">$58.00</p>
+            <button onclick="buyAlbum('Prince', 'Sign O\' the Times', 58.00)" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg transition font-semibold">
+              Comprar Vinilo
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    function buyAlbum(artist, album, price) {
+      sessionStorage.setItem('purchaseData', JSON.stringify({
+        artist: artist,
+        album: album,
+        price: price
+      }));
+      window.location.href = 'checkout.html';
+    }
+  </script>
+</body>
+</html>

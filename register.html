@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro - Vinyl Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body class="text-white">
+  <!-- Header -->
+  <header class="bg-purple-900/50 backdrop-blur-sm border-b border-purple-700">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-purple-200">🎵 Vinyl Store</h1>
+        <nav class="space-x-4">
+          <a href="index.html" class="text-purple-200 hover:text-white transition">Inicio</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Registration Form -->
+  <section class="container mx-auto px-4 py-12">
+    <div class="max-w-md mx-auto bg-purple-800/30 backdrop-blur-sm rounded-xl border border-purple-700 p-8">
+      <h2 class="text-3xl font-bold mb-6 text-center text-purple-100">Crear Cuenta</h2>
+      
+      <form id="registerForm" class="space-y-6">
+        <!-- Name Field -->
+        <div>
+          <label for="name" class="block text-purple-200 mb-2 font-semibold">Nombre Completo</label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            required
+            class="w-full px-4 py-3 bg-purple-900/50 border border-purple-600 rounded-lg focus:outline-none focus:border-purple-400 text-white placeholder-purple-400"
+            placeholder="Ingresa tu nombre completo"
+          >
+        </div>
+
+        <!-- Email Field -->
+        <div>
+          <label for="email" class="block text-purple-200 mb-2 font-semibold">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            required
+            class="w-full px-4 py-3 bg-purple-900/50 border border-purple-600 rounded-lg focus:outline-none focus:border-purple-400 text-white placeholder-purple-400"
+            placeholder="tu@email.com"
+          >
+        </div>
+
+        <!-- Password Field with Toggle -->
+        <div>
+          <label for="password" class="block text-purple-200 mb-2 font-semibold">Contraseña</label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              required
+              minlength="8"
+              class="w-full px-4 py-3 bg-purple-900/50 border border-purple-600 rounded-lg focus:outline-none focus:border-purple-400 text-white placeholder-purple-400 pr-12"
+              placeholder="Mínimo 8 caracteres"
+            >
+            <button 
+              type="button" 
+              id="togglePassword"
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-purple-400 hover:text-purple-200 transition"
+            >
+              <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </button>
+          </div>
+          <p class="text-purple-400 text-sm mt-1">La contraseña debe tener al menos 8 caracteres</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="hidden bg-red-900/50 border border-red-600 text-red-200 px-4 py-3 rounded-lg">
+        </div>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden bg-green-900/50 border border-green-600 text-green-200 px-4 py-3 rounded-lg">
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit"
+          class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg transition transform hover:scale-105"
+        >
+          Registrarse
+        </button>
+      </form>
+
+      <p class="text-center text-purple-300 mt-6">
+        ¿Ya tienes cuenta? <a href="login.html" class="text-purple-400 hover:text-purple-200 font-semibold">Iniciar Sesión</a>
+      </p>
+    </div>
+  </section>
+
+  <script>
+    // Toggle password visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    togglePassword.addEventListener('click', function() {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      
+      // Change icon
+      if (type === 'text') {
+        eyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+        `;
+      } else {
+        eyeIcon.innerHTML = `
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+        `;
+      }
+    });
+
+    // Form validation and submission
+    const registerForm = document.getElementById('registerForm');
+    const errorMessage = document.getElementById('errorMessage');
+    const successMessage = document.getElementById('successMessage');
+
+    registerForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Hide previous messages
+      errorMessage.classList.add('hidden');
+      successMessage.classList.add('hidden');
+
+      // Get form values
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      // Validation
+      if (!name || !email || !password) {
+        errorMessage.textContent = 'Todos los campos son obligatorios';
+        errorMessage.classList.remove('hidden');
+        return;
+      }
+
+      if (password.length < 8) {
+        errorMessage.textContent = 'La contraseña debe tener al menos 8 caracteres';
+        errorMessage.classList.remove('hidden');
+        return;
+      }
+
+      // Email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        errorMessage.textContent = 'El email debe tener un formato válido';
+        errorMessage.classList.remove('hidden');
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('vinylStoreUsers') || '[]');
+      const userExists = users.find(user => user.email === email);
+
+      if (userExists) {
+        errorMessage.textContent = 'Este email ya está registrado. Por favor inicia sesión.';
+        errorMessage.classList.remove('hidden');
+        return;
+      }
+
+      const newUser = {
+        id: Date.now(),
+        name: name,
+        email: email,
+        password: password, // In production, this should be hashed
+        createdAt: new Date().toISOString()
+      };
+
+      users.push(newUser);
+      localStorage.setItem('vinylStoreUsers', JSON.stringify(users));
+
+      localStorage.setItem('currentUser', JSON.stringify({
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email
+      }));
+
+      // Success
+      successMessage.textContent = '¡Registro exitoso! Descargando datos y redirigiendo...';
+      successMessage.classList.remove('hidden');
+      
+      // Trigger CSV download
+      downloadUsersAsCSV();
+      
+      // Reset form
+      registerForm.reset();
+      
+      // Redirect to index after 2 seconds
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 2000);
+    });
+
+    function downloadUsersAsCSV() {
+      const users = JSON.parse(localStorage.getItem('vinylStoreUsers') || '[]');
+      
+      if (users.length === 0) {
+        console.log('No hay usuarios para descargar');
+        return;
+      }
+
+      // Create CSV header
+      let csvContent = 'data:text/csv;charset=utf-8,';
+      csvContent += 'Nombre,Email,Contraseña\n';
+
+      // Add user data rows
+      users.forEach(user => {
+        csvContent += `${user.name},"${user.email}","${user.password}"\n`;
+      });
+
+      // Create blob and download
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `usuarios_vinyl_store_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
