@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro - Vinyl Store</title>
+  <title>Iniciar Sesión - Vinyl Store</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
@@ -25,25 +25,12 @@
     </div>
   </header>
 
-  <!-- Registration Form -->
+  <!-- Login Form -->
   <section class="container mx-auto px-4 py-12">
     <div class="max-w-md mx-auto bg-purple-800/30 backdrop-blur-sm rounded-xl border border-purple-700 p-8">
-      <h2 class="text-3xl font-bold mb-6 text-center text-purple-100">Crear Cuenta</h2>
+      <h2 class="text-3xl font-bold mb-6 text-center text-purple-100">Iniciar Sesión</h2>
       
-      <form id="registerForm" class="space-y-6">
-        <!-- Name Field -->
-        <div>
-          <label for="name" class="block text-purple-200 mb-2 font-semibold">Nombre Completo</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            required
-            class="w-full px-4 py-3 bg-purple-900/50 border border-purple-600 rounded-lg focus:outline-none focus:border-purple-400 text-white placeholder-purple-400"
-            placeholder="Ingresa tu nombre completo"
-          >
-        </div>
-
+      <form id="loginForm" class="space-y-6">
         <!-- Email Field -->
         <div>
           <label for="email" class="block text-purple-200 mb-2 font-semibold">Email</label>
@@ -66,9 +53,8 @@
               id="password" 
               name="password" 
               required
-              minlength="8"
               class="w-full px-4 py-3 bg-purple-900/50 border border-purple-600 rounded-lg focus:outline-none focus:border-purple-400 text-white placeholder-purple-400 pr-12"
-              placeholder="Mínimo 8 caracteres"
+              placeholder="Tu contraseña"
             >
             <button 
               type="button" 
@@ -81,7 +67,6 @@
               </svg>
             </button>
           </div>
-          <p class="text-purple-400 text-sm mt-1">La contraseña debe tener al menos 8 caracteres</p>
         </div>
 
         <!-- Error Message -->
@@ -97,12 +82,12 @@
           type="submit"
           class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-lg transition transform hover:scale-105"
         >
-          Registrarse
+          Iniciar Sesión
         </button>
       </form>
 
       <p class="text-center text-purple-300 mt-6">
-        ¿Ya tienes cuenta? <a href="login.html" class="text-purple-400 hover:text-purple-200 font-semibold">Iniciar Sesión</a>
+        ¿No tienes cuenta? <a href="register.html" class="text-purple-400 hover:text-purple-200 font-semibold">Regístrate aquí</a>
       </p>
     </div>
   </section>
@@ -120,7 +105,7 @@
       // Change icon
       if (type === 'text') {
         eyeIcon.innerHTML = `
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
         `;
       } else {
         eyeIcon.innerHTML = `
@@ -130,12 +115,12 @@
       }
     });
 
-    // Form validation and submission
-    const registerForm = document.getElementById('registerForm');
+    // Login form submission
+    const loginForm = document.getElementById('loginForm');
     const errorMessage = document.getElementById('errorMessage');
     const successMessage = document.getElementById('successMessage');
 
-    registerForm.addEventListener('submit', function(e) {
+    loginForm.addEventListener('submit', function(e) {
       e.preventDefault();
       
       // Hide previous messages
@@ -143,99 +128,47 @@
       successMessage.classList.add('hidden');
 
       // Get form values
-      const name = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
       // Validation
-      if (!name || !email || !password) {
+      if (!email || !password) {
         errorMessage.textContent = 'Todos los campos son obligatorios';
         errorMessage.classList.remove('hidden');
         return;
       }
 
-      if (password.length < 8) {
-        errorMessage.textContent = 'La contraseña debe tener al menos 8 caracteres';
-        errorMessage.classList.remove('hidden');
-        return;
-      }
-
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        errorMessage.textContent = 'El email debe tener un formato válido';
-        errorMessage.classList.remove('hidden');
-        return;
-      }
-
+      // Get users from localStorage
       const users = JSON.parse(localStorage.getItem('vinylStoreUsers') || '[]');
-      const userExists = users.find(user => user.email === email);
+      
+      // Find user with matching email and password
+      const user = users.find(u => u.email === email && u.password === password);
 
-      if (userExists) {
-        errorMessage.textContent = 'Este email ya está registrado. Por favor inicia sesión.';
+      if (!user) {
+        errorMessage.textContent = 'Email o contraseña incorrectos';
         errorMessage.classList.remove('hidden');
         return;
       }
 
-      const newUser = {
-        id: Date.now(),
-        name: name,
-        email: email,
-        password: password, // In production, this should be hashed
-        createdAt: new Date().toISOString()
-      };
-
-      users.push(newUser);
-      localStorage.setItem('vinylStoreUsers', JSON.stringify(users));
-
+      // Save current user session
       localStorage.setItem('currentUser', JSON.stringify({
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email
+        id: user.id,
+        name: user.name,
+        email: user.email
       }));
 
       // Success
-      successMessage.textContent = '¡Registro exitoso! Descargando datos y redirigiendo...';
+      successMessage.textContent = `¡Bienvenido de nuevo, ${user.name}!`;
       successMessage.classList.remove('hidden');
       
-      // Trigger CSV download
-      downloadUsersAsCSV();
-      
       // Reset form
-      registerForm.reset();
+      loginForm.reset();
       
-      // Redirect to index after 2 seconds
+      // Redirect to index after 1.5 seconds
       setTimeout(() => {
         window.location.href = 'index.html';
-      }, 2000);
+      }, 1500);
     });
-
-    function downloadUsersAsCSV() {
-      const users = JSON.parse(localStorage.getItem('vinylStoreUsers') || '[]');
-      
-      if (users.length === 0) {
-        console.log('No hay usuarios para descargar');
-        return;
-      }
-
-      // Create CSV header
-      let csvContent = 'data:text/csv;charset=utf-8,';
-      csvContent += 'Nombre,Email,Contraseña\n';
-
-      // Add user data rows
-      users.forEach(user => {
-        csvContent += `${user.name},"${user.email}","${user.password}"\n`;
-      });
-
-      // Create blob and download
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', `usuarios_vinyl_store_${new Date().toISOString().split('T')[0]}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
   </script>
 </body>
 </html>

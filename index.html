@@ -26,16 +26,15 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+
   <section class="container mx-auto px-4 py-12 text-center">
     <h2 class="text-5xl font-bold mb-4 text-purple-100">Colección de Vinilos Legendarios</h2>
     <p class="text-xl text-purple-300 mb-8">Descubre los mejores álbumes de los artistas más icónicos de la historia</p>
   </section>
 
-  <!-- Search Bar with Filters -->
   <section class="container mx-auto px-4 pb-8">
     <div class="max-w-4xl mx-auto">
-      <!-- Search Form -->
+
       <form id="searchForm" class="bg-purple-800/30 backdrop-blur-sm rounded-xl border border-purple-700 p-6">
         <div class="mb-4">
           <label for="searchInput" class="block text-purple-200 font-semibold mb-2">Buscar canciones, artistas o álbumes</label>
@@ -48,7 +47,6 @@
           <p id="errorMessage" class="text-red-500 font-semibold mt-2 hidden">Por favor llenar el campo</p>
         </div>
 
-        <!-- Genre Filters -->
         <div class="mb-4">
           <label class="block text-purple-200 font-semibold mb-2">Filtrar por género</label>
           <div class="flex flex-wrap gap-2">
@@ -74,13 +72,12 @@
         </div>
 
         <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg transition font-semibold text-lg">
-          🔍 Buscar
+          Buscar
         </button>
       </form>
     </div>
   </section>
 
-  <!-- Artists Grid -->
   <section class="container mx-auto px-4 pb-16">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       
@@ -184,9 +181,7 @@
     </div>
   </footer>
 
-  <!-- Search Functionality JavaScript -->
   <script>
-    // Database with all artists, albums, and songs
     const musicDatabase = [
       {
         artist: 'Frank Sinatra',
@@ -246,11 +241,9 @@
 
     let selectedGenre = 'all';
 
-    // Toggle filter buttons
     function toggleFilter(genre) {
       selectedGenre = genre;
       
-      // Update button styles
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.remove('active', 'bg-purple-600');
         btn.classList.add('bg-purple-800');
@@ -261,7 +254,6 @@
       activeBtn.classList.remove('bg-purple-800');
     }
 
-    // Search form submission
     document.getElementById('searchForm').addEventListener('submit', function(e) {
       e.preventDefault();
       
@@ -276,14 +268,11 @@
         return;
       }
 
-      // Hide error message if input is valid
       errorMessage.classList.add('hidden');
       searchInput.classList.remove('border-red-500');
 
-      // Perform search
       const results = performSearch(searchTerm, selectedGenre);
 
-      // Store results and redirect
       sessionStorage.setItem('searchResults', JSON.stringify(results));
       sessionStorage.setItem('searchTerm', searchTerm);
       sessionStorage.setItem('searchGenre', selectedGenre);
@@ -295,17 +284,14 @@
       }
     });
 
-    // Search function
     function performSearch(term, genre) {
       const results = [];
 
       musicDatabase.forEach(artistData => {
-        // Filter by genre if not "all"
         if (genre !== 'all' && !artistData.genre.includes(genre)) {
           return;
         }
 
-        // Check if artist name matches
         if (artistData.artist.toLowerCase().includes(term)) {
           artistData.albums.forEach(album => {
             results.push({
@@ -324,12 +310,10 @@
         artistData.albums.forEach(album => {
           let matchFound = false;
 
-          // Check if album name matches
           if (album.name.toLowerCase().includes(term)) {
             matchFound = true;
           }
 
-          // Check if any song matches
           album.songs.forEach(song => {
             if (song.toLowerCase().includes(term)) {
               matchFound = true;
@@ -352,7 +336,6 @@
       return results;
     }
 
-    // Clear error message when user starts typing
     document.getElementById('searchInput').addEventListener('input', function() {
       const errorMessage = document.getElementById('errorMessage');
       if (this.value.trim() !== '') {
