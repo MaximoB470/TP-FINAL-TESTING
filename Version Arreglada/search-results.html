@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados de Búsqueda - Vinyl Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body class="text-white">
+  <!-- Header -->
+  <header class="bg-purple-900/50 backdrop-blur-sm border-b border-purple-700">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-purple-200">🎵 Vinyl Store</h1>
+        <nav class="space-x-4">
+          <a href="index.html" class="text-purple-200 hover:text-white transition">← Volver al Inicio</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="container mx-auto px-4 py-12">
+    <div class="text-center mb-8">
+      <h2 class="text-4xl font-bold mb-2 text-purple-100">Resultados de Búsqueda</h2>
+      <p id="searchInfo" class="text-xl text-purple-300"></p>
+    </div>
+
+    <div id="resultsContainer" class="max-w-5xl mx-auto space-y-6">
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-purple-900/50 backdrop-blur-sm border-t border-purple-700 py-8 mt-12">
+    <div class="container mx-auto px-4 text-center text-purple-300">
+      <p>&copy; 2025 Vinyl Store. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    const results = JSON.parse(sessionStorage.getItem('searchResults') || '[]');
+    const searchTerm = sessionStorage.getItem('searchTerm') || '';
+    const searchGenre = sessionStorage.getItem('searchGenre') || 'all';
+
+    const searchInfo = document.getElementById('searchInfo');
+    let infoText = `Encontramos ${results.length} resultado${results.length !== 1 ? 's' : ''} para "${searchTerm}"`;
+    if (searchGenre !== 'all') {
+      infoText += ` en el género ${searchGenre}`;
+    }
+    searchInfo.textContent = infoText;
+
+    const resultsContainer = document.getElementById('resultsContainer');
+
+    results.forEach(result => {
+      const resultCard = document.createElement('div');
+      resultCard.className = 'bg-purple-800/30 backdrop-blur-sm rounded-xl border border-purple-700 p-6 hover:border-purple-500 transition';
+      
+      resultCard.innerHTML = `
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-3xl">${result.type === 'artist' ? '🎤' : '💿'}</span>
+              <div>
+                <h3 class="text-2xl font-bold text-purple-100">${result.album}</h3>
+                <p class="text-purple-300">por ${result.artist}</p>
+              </div>
+            </div>
+            <p class="text-purple-300 mb-2">Género: ${result.genre}</p>
+            <div class="text-purple-200">
+              <p class="font-semibold mb-1">Canciones destacadas:</p>
+              <ul class="list-disc list-inside text-purple-300 space-y-1">
+                ${result.songs.map(song => `<li>${song}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-col items-end gap-3">
+            <p class="text-3xl font-bold text-purple-200">$${result.price.toFixed(2)}</p>
+            <button onclick="buyAlbum('${result.artist}', '${result.album}', ${result.price})" class="bg-purple-600 hover:bg-purple-700 px-8 py-3 rounded-lg transition font-semibold">
+              Comprar Vinilo
+            </button>
+          </div>
+        </div>
+      `;
+      
+      resultsContainer.appendChild(resultCard);
+    });
+
+    function buyAlbum(artist, album, price) {
+      sessionStorage.setItem('purchaseData', JSON.stringify({
+        artist: artist,
+        album: album,
+        price: price
+      }));
+      window.location.href = 'checkout.html';
+    }
+  </script>
+</body>
+</html>

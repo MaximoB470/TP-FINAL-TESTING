@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vinyl Store - Tienda de Vinilos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body class="text-white">
+  <!-- Header -->
+  <header class="bg-purple-900/50 backdrop-blur-sm border-b border-purple-700">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-purple-200">🎵 Vinyl Store</h1>
+        <nav class="flex items-center gap-3 sm:gap-4 flex-nowrap">
+          <a href="index.html" class="text-purple-200 hover:text-white transition whitespace-nowrap">Inicio</a>
+          <a href="register.html" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition whitespace-nowrap">
+            Registrarse
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header> 
+
+
+  <section class="container mx-auto px-4 py-12 text-center">
+    <h2 class="text-5xl font-bold mb-4 text-purple-100">Colección de Vinilos Legendarios</h2>
+    <p class="text-xl text-purple-300 mb-8">Descubre los mejores álbumes de los artistas más icónicos de la historia</p>
+  </section>
+
+  <section class="container mx-auto px-4 pb-8">
+    <div class="max-w-4xl mx-auto">
+
+      <form id="searchForm" class="bg-purple-800/30 backdrop-blur-sm rounded-xl border border-purple-700 p-6">
+        <div class="mb-4">
+          <label for="searchInput" class="block text-purple-200 font-semibold mb-2">Buscar canciones, artistas o álbumes</label>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Ej: Bohemian Rhapsody, Queen, Purple Rain..."
+            class="w-full px-4 py-3 rounded-lg bg-purple-900/50 border border-purple-600 text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 transition"
+          >
+          <p id="errorMessage" class="text-red-500 font-semibold mt-2 hidden">Por favor llenar el campo</p>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-purple-200 font-semibold mb-2">Filtrar por género</label>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" onclick="toggleFilter('all')" class="filter-btn active px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 transition font-semibold" data-genre="all">
+              Todos
+            </button>
+            <button type="button" onclick="toggleFilter('jazz')" class="filter-btn px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition" data-genre="jazz">
+              Jazz
+            </button>
+            <button type="button" onclick="toggleFilter('rock')" class="filter-btn px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition" data-genre="rock">
+              Rock
+            </button>
+            <button type="button" onclick="toggleFilter('funk')" class="filter-btn px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition" data-genre="funk">
+              Funk
+            </button>
+            <button type="button" onclick="toggleFilter('pop')" class="filter-btn px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition" data-genre="pop">
+              Pop
+            </button>
+            <button type="button" onclick="toggleFilter('progresivo')" class="filter-btn px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition" data-genre="progresivo">
+              Progresivo
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg transition font-semibold text-lg">
+          Buscar
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <section class="container mx-auto px-4 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+      <!-- Frank Sinatra -->
+      <div class="bg-purple-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-700 hover:border-purple-500 transition transform hover:scale-105">
+        <div class="h-64 bg-gradient-to-br from-purple-600 to-purple-900 flex items-center justify-center">
+          <img src="Imgs/Sinatra.jpg" alt="C-moon">
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-purple-100">Frank Sinatra</h3>
+          <p class="text-purple-300 mb-2">Jazz / Swing</p>
+          <p class="text-purple-200 text-lg font-semibold mb-4">Desde $45.00</p>
+          <a href="frank-sinatra.html" class="block w-full bg-purple-600 hover:bg-purple-700 text-center py-3 rounded-lg transition font-semibold">
+            Ver Colección
+          </a>
+        </div>
+      </div>
+
+      <!-- Prince -->
+      <div class="bg-purple-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-700 hover:border-purple-500 transition transform hover:scale-105">
+        <div class="h-64 bg-gradient-to-br from-purple-500 to-purple-900 flex items-center justify-center">
+          <img src="Imgs/prince.jpg" alt="Soft and Wet">
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-purple-100">Prince</h3>
+          <p class="text-purple-300 mb-2">Funk / Rock / Pop</p>
+          <p class="text-purple-200 text-lg font-semibold mb-4">Desde $50.00</p>
+          <a href="prince.html" class="block w-full bg-purple-600 hover:bg-purple-700 text-center py-3 rounded-lg transition font-semibold">
+            Ver Colección
+          </a>
+        </div>
+      </div>
+
+      <!-- Elvis Presley -->
+      <div class="bg-purple-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-700 hover:border-purple-500 transition transform hover:scale-105">
+        <div class="h-64 bg-gradient-to-br from-purple-600 to-indigo-900 flex items-center justify-center">
+          <img src="Imgs/elvis.jpg" alt="Calamity">
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-purple-100">Elvis Presley</h3>
+          <p class="text-purple-300 mb-2">Rock and Roll</p>
+          <p class="text-purple-200 text-lg font-semibold mb-4">Desde $42.00</p>
+          <a href="elvis-presley.html" class="block w-full bg-purple-600 hover:bg-purple-700 text-center py-3 rounded-lg transition font-semibold">
+            Ver Colección
+          </a>
+        </div>
+      </div>
+
+      <!-- Queen -->
+      <div class="bg-purple-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-700 hover:border-purple-500 transition transform hover:scale-105">
+        <div class="h-64 bg-gradient-to-br from-purple-700 to-pink-900 flex items-center justify-center">
+          <img src="Imgs/queen.jpg" alt="Kira">
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-purple-100">Queen</h3>
+          <p class="text-purple-300 mb-2">Rock</p>
+          <p class="text-purple-200 text-lg font-semibold mb-4">Desde $48.00</p>
+          <a href="queen.html" class="block w-full bg-purple-600 hover:bg-purple-700 text-center py-3 rounded-lg transition font-semibold">
+            Ver Colección
+          </a>
+        </div>
+      </div>
+
+      <!-- Jimi Hendrix -->
+      <div class="bg-purple-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-700 hover:border-purple-500 transition transform hover:scale-105">
+        <div class="h-64 bg-gradient-to-br from-purple-600 to-purple-900 flex items-center justify-center">
+          <img src="Imgs/hendrix.jpg" alt="Jolyne">
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-purple-100">Jimi Hendrix</h3>
+          <p class="text-purple-300 mb-2">Rock Psicodélico</p>
+          <p class="text-purple-200 text-lg font-semibold mb-4">Desde $55.00</p>
+          <a href="jimi-hendrix.html" class="block w-full bg-purple-600 hover:bg-purple-700 text-center py-3 rounded-lg transition font-semibold">
+            Ver Colección
+          </a>
+        </div>
+      </div>
+
+      <!-- Pink Floyd -->
+      <div class="bg-purple-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-700 hover:border-purple-500 transition transform hover:scale-105">
+        <div class="h-64 bg-gradient-to-br from-purple-600 to-blue-900 flex items-center justify-center">
+          <img src="Imgs/Floyd.jpg" alt="josuke">
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-purple-100">Pink Floyd</h3>
+          <p class="text-purple-300 mb-2">Rock Progresivo</p>
+          <p class="text-purple-200 text-lg font-semibold mb-4">Desde $52.00</p>
+          <a href="pink-floyd.html" class="block w-full bg-purple-600 hover:bg-purple-700 text-center py-3 rounded-lg transition font-semibold">
+            Ver Colección
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-purple-900/50 backdrop-blur-sm border-t border-purple-700 py-8">
+    <div class="container mx-auto px-4 text-center text-purple-300">
+      <p>&copy; 2025 Vinyl Store. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    const musicDatabase = [
+      {
+        artist: 'Frank Sinatra',
+        genre: ['jazz', 'pop'],
+        albums: [
+          { name: 'My Way', songs: ['My Way', 'All My Tomorrows', 'A Day in the Life of a Fool'], price: 45.00 },
+          { name: 'Come Fly with Me', songs: ['Come Fly with Me', 'Around the World', 'Isle of Capri'], price: 48.00 },
+          { name: 'In the Wee Small Hours', songs: ['In the Wee Small Hours of the Morning', 'Mood Indigo', 'Glad to Be Unhappy'], price: 52.00 }
+        ]
+      },
+      {
+        artist: 'Prince',
+        genre: ['funk', 'rock', 'pop'],
+        albums: [
+          { name: 'Purple Rain', songs: ['Purple Rain', 'When Doves Cry', 'Let\'s Go Crazy'], price: 50.00 },
+          { name: '1999', songs: ['1999', 'Little Red Corvette', 'Delirious'], price: 48.00 },
+          { name: 'Sign O\' the Times', songs: ['Sign O\' the Times', 'If I Was Your Girlfriend', 'U Got the Look'], price: 52.00 }
+        ]
+      },
+      {
+        artist: 'Elvis Presley',
+        genre: ['rock'],
+        albums: [
+          { name: 'Elvis Presley', songs: ['Blue Suede Shoes', 'I Got a Woman', 'Tutti Frutti'], price: 42.00 },
+          { name: 'Elvis\' Christmas Album', songs: ['Blue Christmas', 'White Christmas', 'Silent Night'], price: 45.00 },
+          { name: 'From Elvis in Memphis', songs: ['In the Ghetto', 'Suspicious Minds', 'Don\'t Cry Daddy'], price: 48.00 }
+        ]
+      },
+      {
+        artist: 'Queen',
+        genre: ['rock'],
+        albums: [
+          { name: 'A Night at the Opera', songs: ['Bohemian Rhapsody', 'You\'re My Best Friend', 'Love of My Life'], price: 48.00 },
+          { name: 'News of the World', songs: ['We Will Rock You', 'We Are the Champions', 'Spread Your Wings'], price: 46.00 },
+          { name: 'The Game', songs: ['Another One Bites the Dust', 'Crazy Little Thing Called Love', 'Save Me'], price: 50.00 }
+        ]
+      },
+      {
+        artist: 'Jimi Hendrix',
+        genre: ['rock'],
+        albums: [
+          { name: 'Are You Experienced', songs: ['Purple Haze', 'Hey Joe', 'The Wind Cries Mary'], price: 55.00 },
+          { name: 'Axis: Bold as Love', songs: ['Little Wing', 'Castles Made of Sand', 'Bold as Love'], price: 52.00 },
+          { name: 'Electric Ladyland', songs: ['All Along the Watchtower', 'Voodoo Child', 'Crosstown Traffic'], price: 58.00 }
+        ]
+      },
+      {
+        artist: 'Pink Floyd',
+        genre: ['progresivo', 'rock'],
+        albums: [
+          { name: 'The Dark Side of the Moon', songs: ['Time', 'Money', 'Us and Them'], price: 52.00 },
+          { name: 'The Wall', songs: ['Another Brick in the Wall', 'Comfortably Numb', 'Hey You'], price: 55.00 },
+          { name: 'Wish You Were Here', songs: ['Wish You Were Here', 'Shine On You Crazy Diamond', 'Have a Cigar'], price: 50.00 }
+        ]
+      }
+    ];
+
+    let selectedGenre = 'all';
+
+    function toggleFilter(genre) {
+      selectedGenre = genre;
+      
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-purple-600');
+        btn.classList.add('bg-purple-800');
+      });
+      
+      const activeBtn = document.querySelector(`[data-genre="${genre}"]`);
+      activeBtn.classList.add('active', 'bg-purple-600');
+      activeBtn.classList.remove('bg-purple-800');
+    }
+
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const searchInput = document.getElementById('searchInput');
+      const errorMessage = document.getElementById('errorMessage');
+      const searchTerm = searchInput.value.trim().toLowerCase();
+
+      // Validation: check if input is empty
+      if (searchTerm === '') {
+        errorMessage.classList.remove('hidden');
+        searchInput.classList.add('border-red-500');
+        return;
+      }
+
+      errorMessage.classList.add('hidden');
+      searchInput.classList.remove('border-red-500');
+
+      const results = performSearch(searchTerm, selectedGenre);
+
+      sessionStorage.setItem('searchResults', JSON.stringify(results));
+      sessionStorage.setItem('searchTerm', searchTerm);
+      sessionStorage.setItem('searchGenre', selectedGenre);
+
+      if (results.length === 0) {
+        window.location.href = 'not-found.html';
+      } else {
+        window.location.href = 'search-results.html';
+      }
+    });
+
+    function performSearch(term, genre) {
+      const results = [];
+
+      musicDatabase.forEach(artistData => {
+        if (genre !== 'all' && !artistData.genre.includes(genre)) {
+          return;
+        }
+
+        if (artistData.artist.toLowerCase().includes(term)) {
+          artistData.albums.forEach(album => {
+            results.push({
+              type: 'artist',
+              artist: artistData.artist,
+              album: album.name,
+              songs: album.songs,
+              price: album.price,
+              genre: artistData.genre.join(' / ')
+            });
+          });
+          return;
+        }
+
+        // Check albums and songs
+        artistData.albums.forEach(album => {
+          let matchFound = false;
+
+          if (album.name.toLowerCase().includes(term)) {
+            matchFound = true;
+          }
+
+          album.songs.forEach(song => {
+            if (song.toLowerCase().includes(term)) {
+              matchFound = true;
+            }
+          });
+
+          if (matchFound) {
+            results.push({
+              type: 'album',
+              artist: artistData.artist,
+              album: album.name,
+              songs: album.songs,
+              price: album.price,
+              genre: artistData.genre.join(' / ')
+            });
+          }
+        });
+      });
+
+      return results;
+    }
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const errorMessage = document.getElementById('errorMessage');
+      if (this.value.trim() !== '') {
+        errorMessage.classList.add('hidden');
+        this.classList.remove('border-red-500');
+      }
+    });
+  </script>
+</body>
+</html>
