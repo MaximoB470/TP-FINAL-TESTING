@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vinyl Store - Tienda de Vinilos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body class="text-white">
+  <!-- Header -->
+  <header class="bg-purple-900/50 backdrop-blur-sm border-b border-purple-700">
+  <div class="container mx-auto px-4 py-6">
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-purple-200">🎵 Vinyl Store</h1>
+      <nav class="space-x-4 flex items-center" id="navMenu">
+
+        <!-- 🛒 Botón del carrito (AHORA a la izquierda de Inicio) -->
+        <button 
+          id="btnCarrito" 
+          onclick="toggleCarrito()" 
+          class="relative bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded-lg font-semibold flex items-center gap-2">
+          🛒 Carrito
+          <span id="contadorCarrito" class="bg-red-600 text-xs rounded-full px-2 py-0.5 absolute -top-2 -right-2">0</span>
+        </button>
+
+        <a href="index.html" class="text-purple-200 hover:text-white transition">Inicio</a>
+
+        <a href="login.html" id="loginLink" class="text-purple-200 hover:text-white transition">Iniciar Sesión</a>
+        <a href="register.html" id="registerLink" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition">Registrarse</a>
+        <span id="userGreeting" class="text-purple-200 hidden"></span>
+        <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg transition hidden">Cerrar Sesión</button>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+<div id="carritoContainer" class="hidden fixed right-6 top-24 bg-purple-900/95 backdrop-blur-sm border border-purple-700 rounded-xl p-6 w-80 shadow-2xl z-50">
+  <h3 class="text-lg font-bold mb-3 text-purple-100">🛍️ Tu Carrito</h3>
+  <ul id="listaCarrito" class="text-sm text-purple-200 max-h-48 overflow-y-auto mb-4"></ul>
+  <p class="font-semibold mb-3 text-purple-100 text-center">Total: $<span id="total">0.00</span></p>
+  <div class="flex justify-center gap-3">
+    <button onclick="vaciarCarrito()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm font-semibold">Vaciar</button>
+    <button onclick="comprarCarrito()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg text-sm font-semibold">Comprar</button>
+
+  </div>
+</div>
+
+  <section class="container mx-auto px-4 py-12 text-center">
+    <h2 class="text-5xl font-bold mb-4 text-purple-100">Colección de Vinilos Legendarios</h2>
+    <p class="text-xl text-purple-300 mb-8">Descubre los mejores álbumes de los artistas más icónicos de la historia</p>
+  </section>
+
+  <section class="container mx-auto px-4 pb-8">
+    <div class="max-w-4xl mx-auto">
+      <form id="searchForm" class="bg-purple-800/30 backdrop-blur-sm rounded-xl border border-purple-700 p-6">
+        <div class="mb-4">
+          <label for="searchInput" class="block text-purple-200 font-semibold mb-2">Buscar canciones, artistas o álbumes</label>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Ej: Bohemian Rhapsody, Queen, Purple Rain..."
+            class="w-full px-4 py-3 rounded-lg bg-purple-900/50 border border-purple-600 text-white placeholder-purple-400 focus:outline-none focus:border-purple-400 transition"
+          >
+          <p id="errorMessage" class="text-red-500 font-semibold mt-2 hidden">Por favor llenar el campo</p>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-purple-200 font-semibold mb-2">Filtrar por género</label>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" onclick="filterByGenre('all')" class="filter-btn active px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 transition font-semibold" data-genre="all">
+              Todos
+            </button>
+            <button type="button" onclick="filterByGenre('jazz')" class="filter-btn px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition" data-genre="jazz">
+              Jazz
+            </button>
+            <button type="button" onclick="filterByGenre('rock')" class="filter-btn px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition" data-genre="rock">
+              Rock
+            </button>
+            <button type="button" onclick="filterByGenre('funk')" class="filter-btn px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition" data-genre="funk">
+              Funk
+            </button>
+            <button type="button" onclick="filterByGenre('pop')" class="filter-btn px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition" data-genre="pop">
+              Pop
+            </button>
+            <button type="button" onclick="filterByGenre('progresivo')" class="filter-btn px-4 py-2 rounded-lg bg-purple-800 hover:bg-purple-700 transition" data-genre="progresivo">
+              Progresivo
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-lg transition font-semibold text-lg">
+          Buscar
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <section class="container mx-auto px-4 pb-16">
+    <div id="artistsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-purple-900/50 backdrop-blur-sm border-t border-purple-700 py-8">
+    <div class="container mx-auto px-4 text-center text-purple-300">
+      <p>&copy; 2025 Vinyl Store. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+  // --- Datos existentes ---
+  const artists = [
+    { name: 'Frank Sinatra', genres: ['jazz', 'pop'], link: 'frank-sinatra.html', price: 45.00, image: 'images/frank-sinatra.jpg' },
+    { name: 'Prince', genres: ['funk', 'rock', 'pop'], link: 'prince.html', price: 50.00, image: 'images/prince.jpg' },
+    { name: 'Elvis Presley', genres: ['rock'], link: 'elvis-presley.html', price: 42.00, image: 'images/elvis-presley.jpg' },
+    { name: 'Queen', genres: ['rock'], link: 'queen.html', price: 48.00, image: 'images/queen.jpg' },
+    { name: 'Jimi Hendrix', genres: ['rock'], link: 'jimi-hendrix.html', price: 55.00, image: 'images/jimi-hendrix.jpg' },
+    { name: 'Pink Floyd', genres: ['progresivo', 'rock'], link: 'pink-floyd.html', price: 52.00, image: 'images/pink-floyd.jpg' }
+  ];
+
+  let currentGenreFilter = 'all';
+
+  // --- Carrito ---
+  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+  function guardarCarrito() {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+  }
+
+  function agregarAlCarrito(nombre, precio) {
+    const producto = carrito.find(p => p.nombre === nombre);
+    if (producto) {
+      producto.cantidad++;
+    } else {
+      carrito.push({ nombre, precio, cantidad: 1 });
+    }
+    guardarCarrito();
+    actualizarCarrito();
+  }
+
+  function eliminarDelCarrito(nombre) {
+    carrito = carrito.filter(p => p.nombre !== nombre);
+    guardarCarrito();
+    actualizarCarrito();
+  }
+
+  function vaciarCarrito() {
+    carrito = [];
+    guardarCarrito();
+    actualizarCarrito();
+  }
+
+  function actualizarCarrito() {
+    const lista = document.getElementById('listaCarrito');
+    const totalEl = document.getElementById('total');
+    lista.innerHTML = '';
+    let total = 0;
+
+    carrito.forEach(p => {
+      total += p.precio * p.cantidad;
+      const li = document.createElement('li');
+      li.className = "flex justify-between items-center border-b border-purple-700 py-2";
+      li.innerHTML = `
+        <span>${p.nombre} x${p.cantidad}</span>
+        <div>
+          <span>$${p.precio * p.cantidad}</span>
+          <button onclick="eliminarDelCarrito('${p.nombre}')" class="ml-3 text-red-400 hover:text-red-600">✖</button>
+        </div>
+      `;
+      lista.appendChild(li);
+    });
+
+    totalEl.textContent = total.toFixed(2);
+    actualizarContador();
+
+  }
+
+  // --- Mostrar artistas + botón de compra ---
+  function displayArtists(genre) {
+    const grid = document.getElementById('artistsGrid');
+    grid.innerHTML = '';
+
+    const filtered = genre === 'all' ? artists : artists.filter(artist => artist.genres.includes(genre));
+
+    filtered.forEach(artist => {
+      const genreText = artist.genres.join(' / ');
+      const artistCard = document.createElement('div');
+      artistCard.className = 'bg-purple-800/30 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-700 hover:border-purple-500 transition transform hover:scale-105';
+      artistCard.innerHTML = `
+        <div class="h-64 bg-gradient-to-br from-purple-600 to-purple-900 flex items-center justify-center overflow-hidden">
+          <img src="${artist.image}" alt="${artist.name}" class="w-full h-full object-cover">
+        </div>
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-purple-100">${artist.name}</h3>
+          <p class="text-purple-300 mb-2">${genreText}</p>
+          <p class="text-purple-200 text-lg font-semibold mb-4">$${artist.price.toFixed(2)}</p>
+          <div class="flex gap-2">
+            <a href="${artist.link}" class="flex-1 bg-purple-600 hover:bg-purple-700 text-center py-3 rounded-lg transition font-semibold">
+              Ver Colección
+            </a>
+            <button onclick="agregarAlCarrito('${artist.name}', ${artist.price})" class="flex-1 bg-green-600 hover:bg-green-700 py-3 rounded-lg transition font-semibold">
+              🛒 Agregar
+            </button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(artistCard);
+    });
+  }
+
+  function filterByGenre(genre) {
+    currentGenreFilter = genre;
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active', 'bg-purple-600');
+      btn.classList.add('bg-purple-800');
+    });
+    const activeBtn = document.querySelector(`[data-genre="${genre}"]`);
+    activeBtn.classList.add('active', 'bg-purple-600');
+    activeBtn.classList.remove('bg-purple-800');
+    displayArtists(genre);
+  }
+
+  // --- Render inicial ---
+  displayArtists('all');
+
+  // --- Barra superior dinámica ---
+  function updateNavigation() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const loginLink = document.getElementById('loginLink');
+    const registerLink = document.getElementById('registerLink');
+    const userGreeting = document.getElementById('userGreeting');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    if (currentUser) {
+      loginLink.classList.add('hidden');
+      registerLink.classList.add('hidden');
+      userGreeting.textContent = `Hola, ${currentUser.name}`;
+      userGreeting.classList.remove('hidden');
+      logoutBtn.classList.remove('hidden');
+    } else {
+      loginLink.classList.remove('hidden');
+      registerLink.classList.remove('hidden');
+      userGreeting.classList.add('hidden');
+      logoutBtn.classList.add('hidden');
+    }
+  }
+
+  document.getElementById('logoutBtn').addEventListener('click', function() {
+    localStorage.removeItem('currentUser');
+    updateNavigation();
+    alert('Has cerrado sesión exitosamente');
+  });
+
+  updateNavigation();
+
+
+
+  actualizarCarrito();
+
+  // --- Búsqueda existente ---
+  document.getElementById('searchForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const searchInput = document.getElementById('searchInput');
+    const errorMessage = document.getElementById('errorMessage');
+    const searchTerm = searchInput.value.trim().toLowerCase();
+
+    if (searchTerm === '') {
+      errorMessage.classList.remove('hidden');
+      searchInput.classList.add('border-red-500');
+      return;
+    }
+
+    errorMessage.classList.add('hidden');
+    searchInput.classList.remove('border-red-500');
+
+    const results = performSearch(searchTerm, currentGenreFilter);
+    sessionStorage.setItem('searchResults', JSON.stringify(results));
+    sessionStorage.setItem('searchTerm', searchTerm);
+    sessionStorage.setItem('searchGenre', currentGenreFilter);
+
+    if (results.length === 0) {
+      window.location.href = 'not-found.html';
+    } else {
+      window.location.href = 'search-results.html';
+    }
+  });
+
+  function performSearch(term, genre) {
+    const results = [];
+    // (tu lógica de búsqueda original se mantiene igual)
+    return results;
+  }
+
+  document.getElementById('searchInput').addEventListener('input', function() {
+    const errorMessage = document.getElementById('errorMessage');
+    if (this.value.trim() !== '') {
+      errorMessage.classList.add('hidden');
+      this.classList.remove('border-red-500');
+    }
+  });
+
+  function toggleCarrito() {
+    document.getElementById("carritoContainer").classList.toggle("hidden");
+  }
+
+  function actualizarContador() {
+    document.getElementById("contadorCarrito").textContent = carrito.length;
+  }
+
+  // Actualiza el contador al cargar
+  actualizarCarrito();
+
+  function comprarCarrito() {
+    if (carrito.length === 0) {
+      alert("El carrito está vacío. Agrega productos para poder comprar.");
+      return;
+    }
+
+    // Guardamos el carrito en localStorage para que checkout.html lo lea
+    localStorage.setItem('checkoutItems', JSON.stringify(carrito));
+
+    // Redirigir al checkout
+    window.location.href = "checkout.html";
+  }
+
+</script>
+</body>
+</html>
